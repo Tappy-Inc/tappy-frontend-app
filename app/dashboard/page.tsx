@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const dashboard = () => {
+const dashboard = async () => {
   return (
     <div>
       Dashboard

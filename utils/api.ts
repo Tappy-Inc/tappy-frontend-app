@@ -1,17 +1,21 @@
+import { env } from "@/lib/env.mjs";
+
 export const api = {
   auth: {
     login: async (username: string, password: string) => {},
     session: async () => {
-      const response = await fetch("", {
-        credentials: "include",
-        method: "POST",
-      });
+      const response = await fetch(
+        `${env.API_BASE_URL}/authentication/session`,
+        {
+          credentials: "include",
+          method: "GET",
+        },
+      );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      return {
+        result: await response.json(),
+        status: response.status,
+      };
     },
     accessToken: async () => {},
     refreshToken: async (accessToken: string) => {},
