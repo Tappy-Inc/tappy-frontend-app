@@ -17,4 +17,11 @@ export const api = {
     refreshToken: async (accessToken: string) => {},
     logout: async () => {},
   },
+  simulatePromise: async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("Request successful");
+      }, 3000);
+    });
+  },
 };

@@ -6,8 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { api } from "@/utils/api";
 
 const login = async () => {
+  await api.simulatePromise();
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
