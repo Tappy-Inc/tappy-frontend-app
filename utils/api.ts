@@ -25,7 +25,7 @@ export const api = {
     },
     session: async () => {
       const response = await fetch(
-        `${env.API_BASE_URL}/authentication/session`,
+        `${env.API_BASE_URL}/authentication/session/`,
         {
           credentials: "include",
           method: "GET",
