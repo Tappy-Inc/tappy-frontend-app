@@ -2,9 +2,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form, FormField, FormItem, FormLabel } from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/utils/api";
+import { redirect, useRouter } from "next/navigation";
 
 const LoginSchema = z.object({
   username: z.string().min(3),
@@ -12,16 +15,30 @@ const LoginSchema = z.object({
 });
 
 const SignInForm = () => {
-  const form = useForm({
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  const { mutateAsync } = useMutation({
+    mutationKey: ["signIn"],
+    mutationFn: api.auth.login,
+    onSuccess: () => {
+      return router.push("/");
+    },
   });
 
   return (
     <Form {...form}>
       <form
         className="space-y-5"
-        onSubmit={form.handleSubmit((data) => {
-          console.log(data);
+        onSubmit={form.handleSubmit(async (data) => {
+          await mutateAsync(data);
         })}
       >
         <div className="grid w-full items-center gap-4">
@@ -32,7 +49,9 @@ const SignInForm = () => {
               <FormItem>
                 <div className="flex flex-col space-y-1.5">
                   <FormLabel>Username</FormLabel>
-                  <Input id="username" {...field} />
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
                 </div>
               </FormItem>
             )}
@@ -44,7 +63,9 @@ const SignInForm = () => {
               <FormItem>
                 <div className="flex flex-col space-y-1.5">
                   <FormLabel>Password</FormLabel>
-                  <Input id="password" {...field} />
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
                 </div>
               </FormItem>
             )}
