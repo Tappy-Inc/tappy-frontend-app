@@ -6,6 +6,7 @@ export const api = {
       const response = await fetch(
         `${env.NEXT_PUBLIC_API_BASE_URL}/authentication/login/`,
         {
+          credentials: "include",
           method: "POST",
           headers: {
             "Content-Type": "application/json",
