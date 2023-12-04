@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
+import ReactQueryProvider from "@/components/rq-provider/react-query-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "./globals.css";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -19,15 +21,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
-      >
-        {children}
-      </body>
-    </html>
+    <ReactQueryProvider>
+      <html lang="en">
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable,
+          )}
+        >
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </body>
+      </html>
+    </ReactQueryProvider>
   );
 }
