@@ -5,7 +5,8 @@ import ReactQueryProvider from "@/components/rq-provider/react-query-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./globals.css";
 
-export const fontSans = FontSans({
+// Define fontSans inside the component
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
