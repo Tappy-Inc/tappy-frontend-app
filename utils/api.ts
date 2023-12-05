@@ -24,14 +24,20 @@ export const api = {
 
       return await response.json();
     },
-    session: async () => {
-      const response = await fetch(
-        `${env.API_BASE_URL}/authentication/session/`,
-        {
-          credentials: "include",
-          method: "GET",
-        },
-      );
+    session: async (query?: {
+      session_id?: string;
+      session_value?: string;
+    }) => {
+      let apiUrl = "/authentication/session/";
+
+      if (query && query?.session_id && query?.session_value) {
+        apiUrl = `${apiUrl}?session_id=${query.session_id}&session_value=${query.session_value}`;
+      }
+
+      const response = await fetch(`${env.API_BASE_URL}${apiUrl}`, {
+        credentials: "include",
+        method: "GET",
+      });
 
       return {
         result: await response.json(),

@@ -8,19 +8,23 @@ const HOME_PATH = "/";
 
 export async function middleware(request: NextRequest) {
   try {
-    const session = await api.auth.session();
+    const session_id = request.cookies.get("sessionid");
+    const session_value = request.cookies.get(session_id?.value ?? "");
 
-    console.log(session);
+    const session = await api.auth.session({
+      session_id: session_id?.value,
+      session_value: session_value?.value,
+    });
 
     // If the user is not authenticated and not on the login page, redirect them to the login page
-    // if (session.status === 401 && request.nextUrl.pathname !== LOGIN_PATH) {
-    //   return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
-    // }
+    if (session.status === 401 && request.nextUrl.pathname !== LOGIN_PATH) {
+      return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
+    }
 
     // If the user is authenticated and on the login page, redirect them to the home page
-    // if (session.status === 200 && request.nextUrl.pathname === LOGIN_PATH) {
-    //   return NextResponse.redirect(new URL(HOME_PATH, request.url));
-    // }
+    if (session.status === 200 && request.nextUrl.pathname === LOGIN_PATH) {
+      return NextResponse.redirect(new URL(HOME_PATH, request.url));
+    }
   } catch (error: any) {
     // Handle any errors that occur during the execution of the middleware
     console.error("Error in middleware:", error);
