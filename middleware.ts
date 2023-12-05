@@ -26,6 +26,7 @@ export async function middleware(request: NextRequest) {
     // If the user is not authenticated and not on the login page, redirect them to the login page
     if (session.status === 401 && request.nextUrl.pathname !== LOGIN_PATH) {
       console.log("401 Return to /login");
+      console.log({ url: request.url });
 
       return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
     }
@@ -33,6 +34,7 @@ export async function middleware(request: NextRequest) {
     // If the user is authenticated and on the login page, redirect them to the home page
     if (session.status === 200 && request.nextUrl.pathname === LOGIN_PATH) {
       console.log("200 Return to /");
+      console.log({ url: request.url });
 
       return NextResponse.redirect(new URL(HOME_PATH, request.url));
     }
