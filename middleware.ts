@@ -10,6 +10,8 @@ export async function middleware(request: NextRequest) {
   try {
     const session = await api.auth.session();
 
+    console.log(session);
+
     // If the user is not authenticated and not on the login page, redirect them to the login page
     if (session.status === 401 && request.nextUrl.pathname !== LOGIN_PATH) {
       return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
