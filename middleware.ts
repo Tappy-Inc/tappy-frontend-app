@@ -17,6 +17,7 @@ export async function middleware(request: NextRequest) {
     });
 
     console.log({
+      id: Date.now(),
       session_id: session_id?.value,
       session_value: session_value?.value,
       session,
