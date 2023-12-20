@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ReactQueryProvider from "@/components/rq-provider/react-query-provider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // Define fontSans inside the component
@@ -32,6 +33,7 @@ export default function RootLayout({
         >
           {children}
           <ReactQueryDevtools initialIsOpen={false} />
+          <SpeedInsights />
         </body>
       </html>
     </ReactQueryProvider>
