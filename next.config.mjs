@@ -2,7 +2,7 @@ await import("./lib/env.mjs");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  output: process.env.DOCKER_ENABLED === "1" ? "standalone" : undefined,
 };
 
 export default nextConfig;
