@@ -2,7 +2,7 @@ import { env } from "@/lib/env.mjs";
 
 export const api = {
   auth: {
-    login: async (data: { username: string; password: string }) => {
+    login: async (data: { email: string; password: string }) => {
       const response = await fetch(
         `${env.NEXT_PUBLIC_API_BASE_URL}/authentication/login/`,
         {
@@ -11,7 +11,7 @@ export const api = {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: data.username,
+            email: data.email,
             password: data.password,
           }),
         },

@@ -7,10 +7,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/utils/api";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginSchema = z.object({
-  username: z.string().min(3),
+  email: z.string().email(),
   password: z.string().min(1),
 });
 
@@ -20,7 +20,7 @@ const SignInForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -43,12 +43,12 @@ const SignInForm = () => {
       >
         <div className="grid w-full items-center gap-4">
           <FormField
-            name="username"
+            name="email"
             control={form.control}
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-col space-y-1.5">
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
